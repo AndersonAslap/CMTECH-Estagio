@@ -1,0 +1,112 @@
+Lógica e Banco de dados
+
+QUESTÕES DE PHP
+
+1 - Refatore o seguinte programa visando torná-lo mais legível, manutenível e reaproveitável:
+
+<?php
+	$xpto1 = 5;
+	$xpto2 = 20;
+
+	echo "Base: ", $xpto1;
+	echo "Altura: ", $xpto2;
+
+	$xpto3 = 12;
+	$xpto4 = 3;
+
+	echo "Base: ", $xpto3;
+	echo "Altura: ", $xpto4;
+
+	$xpto5 = $xpto1 * $xpto2;
+	$xpto6 = $xpto3 * $xpto4;
+?>
+
+RESPOSTA:
+
+<?php
+	class Retangulo{
+		public $base;
+		public $altura;
+	}
+	function criarRetangulo($b, $a){
+		$r = new Retangulo();
+		$r->base = $b;
+		$r->altura = $a;
+		return $r;
+	}
+	function calcularArea($b, $a){
+		$r = $b * $a;
+		return $r;
+	}
+?>
+
+2 - Corrija o programa abaixo para que ele imprima os dez primeiros múltiplos positivos de 4 e 5:
+
+<?php
+	$encontrados = 0;
+	for ($i = 0; $i < 10; $i++) {
+		if($i % 4 != 0 && $i % 5 != 0){
+			echo $i, PHP_EOL
+			$encontrados++;
+		}
+	}
+?>
+
+RESPOSTA: 
+
+<?php
+	$encontrados = 0;
+	for ($i = 0; $encontrados < 10; $i++) {
+		if($i % 4 == 0 && $i % 5 == 0){
+			echo $i, PHP_EOL;
+			$encontrados++;
+		}
+	}
+?>
+
+3 - Descreva detalhadamente o que o seguinte programa faz.
+
+<?php
+	class Palavra{
+		public $texto;
+		public $categoria;
+		public $dificuldade;
+	}
+	function criarPalavra($t, $c, $d){
+		$p = new Palavra();
+		$p->texto = $t;
+		$p->categoria = $c;
+		$p->dificuldade = $d;
+		return $p;
+	}	
+	function selecionar($palavras){
+		// a função rand gera um número aleatório
+		$indice = rand(0, sizeof($palavras) - 1);
+		return $palavras[$indice];
+	}
+	$arrayPalavras = [
+		criarPalavra("Bola", "esportes", "Fácil"),
+		criarPalavra("Pato", "Animais", "Fácil"),
+		criarPalavra("Ourives", "Profissão", "Difícil")
+	];
+
+	echo "Palavra selecionada: ", selecionar($arrayPalavras)->texto;
+?>
+
+Resposta:
+
+O programa em questão gera um string aleatório através de um array de strings pré-definidos (arrayPalavras).
+Primeiramente, declaramos o objeto do tipo "Palavra" que contém as características: texto, categoria e dificuldade. Em seguida, declaramos o método criarPalavra que atribui através da passagem de parâmetros os respectivos atributos do objeto.
+Depois, declaramos o método de selecionar palavras que recebe um string e utiliza a função rand para gerar um número aleatório que servirá como semente para escolha do índice no array "arrayPalavras" de onde o método vai pegar a palavra gerada.
+Por fim, printamos na tela a palavra selecionada chamando o método echo em conjunto com o método selecionar que recebe como parâmetro o array de palavras.
+
+QUESTÕES DE SQL
+
+1 - resposta: C) SELECT a.nome, COUNT(t.matricula) FROM turmas t, disciplinas d, alunos a WHERE t.disciplina=d.disciplina AND t.matricula=a.matricula GROUP BY a.nome, t.matricula;
+
+2 - resposta: B) TRUNCATE TABLE turmas;
+
+3 - resposta: B) SELECT d.descricao FROM turmas t, disciplinas d, alunos a WHERE t.disciplina=d.disciplina AND t.matricula=a.matricula AND t.matricula='282101';
+
+4 - resposta: B) SELECT * FROM CLIENTE C WHERE NOT EXISTS (SELECT * FROM PEDIDO P WHERE C.codigo = P.cod_cliente) ORDER BY C.nome ASC;
+
